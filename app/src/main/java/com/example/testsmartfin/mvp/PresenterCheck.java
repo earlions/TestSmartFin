@@ -10,6 +10,8 @@ import com.example.testsmartfin.db.RepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -58,9 +60,10 @@ public class PresenterCheck implements MVPView.PresenterCheck {
     @Override
     public void insertDara(List<PostCheck> posts, int number) {
         DBHelperCH dbHelperCH = new DBHelperCH(context);
+        RepositoryCheck repositoryCheck = new RepositoryCheck();
         for (int i=0;i<posts.size();i++)
-        new RepositoryCheck().insertDataCheck(dbHelperCH,number,posts.get(i))
-                .subscribeOn(Schedulers.io())
+            repositoryCheck.insertDataCheck(dbHelperCH,number,posts.get(i))
+                .subscribeOn(Schedulers.single())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Boolean>() {
                     @Override
@@ -84,4 +87,5 @@ public class PresenterCheck implements MVPView.PresenterCheck {
                     }
                 });
     }
+
 }

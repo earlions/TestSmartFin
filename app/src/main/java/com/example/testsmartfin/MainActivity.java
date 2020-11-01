@@ -96,12 +96,15 @@ public class MainActivity extends AppCompatActivity implements RangeFragment.OnF
             break;
             case R.id.click9 : sum += "9";
             break;
-            case  R.id.clickZ : sum += ".";
+            case  R.id.clickZ :
+                if (sum.equals(""))sum += "0.";
+                else sum+=".";
             break;
             case  R.id.clickX : sum = "";
+            break;
         }
         int kol=0;
-        if (!sum.equals(""))
+        if (!sum.equals("")&&!sum.equals("0."))
             kol =(int) (Double.parseDouble(sum)*100);
         finalKol=(double) kol/100;
         if (tv!=null) {
